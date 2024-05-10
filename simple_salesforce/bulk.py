@@ -420,7 +420,7 @@ class SFBulkType:
                                  10000
                                  )
 
-            with concurrent.futures.ThreadPoolExecutor() as pool:
+            with concurrent.futures.ThreadPoolExecutor(max_workers=10) as pool:
 
                 job = self._create_job(operation=operation,
                                        use_serial=use_serial,

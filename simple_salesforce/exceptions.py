@@ -1,19 +1,12 @@
 """All exceptions for Simple Salesforce"""
-from typing import Union
 
 
 class SalesforceError(Exception):
     """Base Salesforce API exception"""
 
-    message: str = \
-        'Unknown error occurred for {url}. Response content: {content}'
+    message = 'Unknown error occurred for {url}. Response content: {content}'
 
-    def __init__(
-            self,
-            url: str,
-            status: int,
-            resource_name: str,
-            content: bytes):
+    def __init__(self, url, status, resource_name, content):
         """Initialize the SalesforceError exception
 
         SalesforceError is the base class of exceptions in simple-salesforce
@@ -32,10 +25,10 @@ class SalesforceError(Exception):
         self.resource_name = resource_name
         self.content = content
 
-    def __str__(self) -> str:
+    def __str__(self):
         return self.message.format(url=self.url, content=self.content)
 
-    def __unicode__(self) -> str:
+    def __unicode__(self):
         return self.__str__()
 
 
@@ -88,7 +81,7 @@ class SalesforceResourceNotFound(SalesforceError):
 
     message = 'Resource {name} Not Found. Response content: {content}'
 
-    def __str__(self) -> str:
+    def __str__(self):
         return self.message.format(name=self.resource_name,
                                    content=self.content)
 
@@ -98,18 +91,14 @@ class SalesforceAuthenticationFailed(SalesforceError):
     Thrown to indicate that authentication with Salesforce failed.
     """
 
-    def __init__(
-        self,
-        code: Union[str, int, None],
-        message: str
-        ):
+    def __init__(self, code, message):
         # TODO exceptions don't seem to be using parent constructors at all.
         # this should be fixed.
         # pylint: disable=super-init-not-called
         self.code = code
         self.message = message
 
-    def __str__(self) -> str:
+    def __str__(self):
         return f'{self.code}: {self.message}'
 
 
@@ -120,21 +109,5 @@ class SalesforceGeneralError(SalesforceError):
 
     message = 'Error Code {status}. Response content: {content}'
 
-    def __str__(self) -> str:
+    def __str__(self):
         return self.message.format(status=self.status, content=self.content)
-
-
-class SalesforceOperationError(Exception):
-    """Base error for Bulk API 2.0 operations"""
-
-
-class SalesforceBulkV2LoadError(SalesforceOperationError):
-    """
-    Error occurred during bulk 2.0 load
-    """
-
-
-class SalesforceBulkV2ExtractError(SalesforceOperationError):
-    """
-    Error occurred during bulk 2.0 extract
-    """

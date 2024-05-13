@@ -24,23 +24,23 @@ setup(
     long_description=textwrap.dedent((here / 'README.rst').read_text()),
     long_description_content_type='text/x-rst',
     package_data={
-        'simple_salesforce': ['metadata.wsdl', 'py.typed'],
+        'simple_salesforce': ['metadata.wsdl'],
         },
     install_requires = [
-       'requests>=2.22.0',
-       'typing-extensions',
-       'zeep',
-       'pyjwt[crypto]',
-       'more-itertools'
-       ],
-    tests_require=[
+        'requests>=2.22.0',
+        'cryptography',
+        'zeep',
+        'pyjwt'
+        ],
+    tests_require = [
         'pytest',
         'pytz>=2014.1.1',
         'responses>=0.5.1',
+        'cryptography<3.4',
         ],
-    test_suite='simple_salesforce.tests',
-    keywords=about['__keywords__'],
-    classifiers=[
+    test_suite = 'simple_salesforce.tests',
+    keywords = about['__keywords__'],
+    classifiers = [
         'Development Status :: 5 - Production/Stable',
         'License :: OSI Approved :: Apache Software License',
         'Intended Audience :: Developers',
@@ -54,6 +54,5 @@ setup(
         'Programming Language :: Python :: 3.10',
         'Programming Language :: Python :: 3.11',
         'Programming Language :: Python :: Implementation :: PyPy'
-        ],
-    zip_safe=False,
+        ]
 )
